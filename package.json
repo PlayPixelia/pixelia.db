@@ -1,0 +1,37 @@
+{
+  "name": "pixelia.db",
+  "version": "1.0.0",
+  "description": "Pixelia için oluşturulmuş bir Node.js projelerinde kullanılabilecek bir veri tabanı modülüdür.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "database",
+    "pixelia",
+    "pixelia.db",
+    "pixelia database",
+    "json",
+    "json database",
+    "json veritabanı",
+    "nodejs database",
+    "nodejs veritabanı",
+    "unoxdevs",
+    "playpixelia"
+  ],
+  "author": "Pixelia",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PlayPixelia/pixelia.db.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PlayPixelia/pixelia.db/issues"
+  },
+  "homepage": "https://github.com/PlayPixelia/pixelia.db#readme"
+}
