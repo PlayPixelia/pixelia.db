@@ -4,23 +4,25 @@ module.exports = function subtract(database, databasePath, key, value) {
     if (!key) throw new Error("[HATA] Girilen herhangi bir veri belirtilmemiş.");
     if (typeof key !== "string") throw new TypeError("[HATA] Veri bir string olmalıdır.");
 
-    if (typeof value === "number") {
-        database[key] = (database[key] || 0) - value;
-    } else if (typeof value === "object" && value !== null) {
-        if (!database[key]) {
-            database[key] = {};
+    if (typeof value !== "number") {
+        throw new TypeError("[HATA] Eklenen değer sayı olmalıdır.");
+    }
+
+    if (key.includes('.')) {
+        const [parentKey, childKey] = key.split('.');
+        if (!database[parentKey] || typeof database[parentKey] !== "object") {
+            database[parentKey] = {};
         }
-        for (const subKey in value) {
-            if (value.hasOwnProperty(subKey)) {
-                if (typeof value[subKey] === "number") {
-                    database[key][subKey] = (database[key][subKey] || 0) - value[subKey];
-                } else {
-                    throw new TypeError("[HATA] Çıkarılan değerler sayı olmalıdır.");
-                }
-            }
+
+        if (typeof database[parentKey][childKey] !== "number") {
+            database[parentKey][childKey] = 0;
         }
+        database[parentKey][childKey] -= value;
     } else {
-        throw new TypeError("[HATA] Çıkarılan değer sayı veya obje olmalıdır.");
+        if (typeof database[key] !== "number") {
+            throw new TypeError(`[HATA] Girdiğiniz veri bir sayı olmalıdır.`);
+        }
+        database[key] -= value;
     }
 
     fs.writeFileSync(databasePath, JSON.stringify(database, null, 2));

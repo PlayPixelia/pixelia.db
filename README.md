@@ -3,16 +3,21 @@
 
 Pixelia için oluşturulmuş bir Node.js projelerinde kullanılabilecek bir veri tabanı modülüdür.
 
+## 🧰 Yenilikler
+- Dosya tanımlama şekli değiştirildi.
+- **db.add** ve **db.subtract** fonksiyonlarında olan ufak hatalar düzeltildi.
+- Genel hata düzeltmesi yapıldı.
+
 
 ## ✨ Kurulum
 - İlk başta projenize modülü kurunuz.
 ```
 npm i pixelia.db
 ```
-- Daha sonra projenize tamamlayınız.
+- Daha sonra projenize tanımlayınız.
 ```js
-const PixeliaDB = require("pixelia.db");
-const db = new PixeliaDB("./database.json");
+const PixeliaDB = require('pixelia.db');
+const db = new PixeliaDB({ databasePath: './database.json' });
 ```
 *⚠ Uyarı: Eğer bir klasör içine ekleyecekseniz ilk başta klasörü oluşturmanız gerekmektedir.*
 
@@ -69,13 +74,38 @@ db.push('yeniDizi2', { array: "Merhaba Pixelia!" });
 - **db.add():** fonksiyonu, belirtilen anahtardaki değeri artırmak için kullanılır. Eğer belirtilen anahtar mevcut değilse, yeni bir anahtar oluşturulur ve değeri eklenir.
 
 ```js
-db.add('puan', 5);
+db.add('xp', 5);
+```
+
+```js
+db.add('kullanıcı_alfred.xp', 5);
+```
+*🖨️ Çıktı*
+```json
+{
+  "kullanıcı_alfred": {
+    "xp": 5
+  }
+}
 ```
 
 - **db.subtract():** fonksiyonu, belirtilen anahtardaki değeri azaltmak için kullanılır. Eğer belirtilen anahtar mevcut değilse, yeni bir anahtar oluşturulur ve değeri eklenir.
 
 ```js
-db.subtract('puan', 2);
+db.subtract('xp', 2);
 ```
+
+```js
+db.subtract('kullanıcı_alfred.xp', 2);
+```
+*🖨️ Çıktı*
+```json
+{
+  "kullanıcı_alfred": {
+    "xp": 3
+  }
+}
+```
+
 ## 📜 Lisans
 PixeliaDB, Pixelia topluluğu tarafından geliştirilmiş özel bir JSON veritabanı modülüdür. Kaynak kodları GitHub üzerinde herkese açık olarak paylaşılmış olup, MIT lisansı altında korunmaktadır. Bu modül, basit ve hafif bir şekilde JSON tabanlı veri depolamak için tasarlanmıştır ve Pixelia projelerinde kullanılmak üzere özelleştirilmiştir. Bu modülün izinsiz kopyalanması veya paylaşılması durumunda yasal haklar saklıdır ve gereken adımlar atılacaktır.

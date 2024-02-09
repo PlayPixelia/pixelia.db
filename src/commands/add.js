@@ -4,25 +4,27 @@ module.exports = function add(database, databasePath, key, value) {
     if (!key) throw new Error("[HATA] Girilen herhangi bir veri belirtilmemiş.");
     if (typeof key !== "string") throw new TypeError("[HATA] Veri bir string olmalıdır.");
 
-    if (typeof value === "number") {
-        database[key] = (database[key] || 0) + value;
-    } else if (typeof value === "object" && value !== null) {
-        if (!database[key]) {
-            database[key] = {};
-        }
-        for (const subKey in value) {
-            if (value.hasOwnProperty(subKey)) {
-                if (typeof value[subKey] === "number") {
-                    database[key][subKey] = (database[key][subKey] || 0) + value[subKey];
-                } else {
-                    throw new TypeError("[HATA] Eklenen değerler sayı olmalıdır.");
-                }
-            }
-        }
-    } else {
-        throw new TypeError("[HATA] Eklenen değer sayı olmalıdır.");
+    if (typeof value !== "number" && typeof value !== "object") {
+        throw new TypeError("[HATA] Eklenen değer sayı veya obje olmalıdır.");
     }
 
+    if (key.includes('.')) {
+        const [parentKey, childKey] = key.split('.');
+        if (!database[parentKey] || typeof database[parentKey] !== "object") {
+            database[parentKey] = {};
+        }
+        if (typeof database[parentKey][childKey] === "number") {
+            database[parentKey][childKey] += value;
+        } else {
+            database[parentKey][childKey] = value;
+        }
+    } else {
+        if (typeof database[key] === "number") {
+            database[key] += value;
+        } else {
+            database[key] = value;
+        }
+    }
     fs.writeFileSync(databasePath, JSON.stringify(database, null, 2));
     return database;
 };
