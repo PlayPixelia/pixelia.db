@@ -6,12 +6,14 @@ module.exports = function set(database, databasePath, key, value) {
 
     if (value === undefined) throw new Error("[HATA] Girilen herhangi bir veri belirtilmemiş.");
 
-    if (!database[key]) {
-        database[key] = value;
-    } else if (typeof database[key] === "object" && value !== null && !Array.isArray(value)) {
-        database[key] = { ...database[key], ...value };
+    if (key.includes('.')) {
+        const [parentKey, childKey] = key.split('.');
+        if (!database[parentKey] || typeof database[parentKey] !== "object") {
+            database[parentKey] = {};
+        }
+        database[parentKey][childKey] = value;
     } else {
-        throw new TypeError(`[HATA] Eklemek istediğiniz veri zaten mevcut.`);
+        database[key] = value;
     }
 
     fs.writeFileSync(databasePath, JSON.stringify(database, null, 2));

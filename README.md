@@ -4,9 +4,8 @@
 Pixelia için oluşturulmuş bir Node.js projelerinde kullanılabilecek bir veri tabanı modülüdür.
 
 ## 🧰 Yenilikler
-- Dosya tanımlama şekli değiştirildi.
-- **db.add** ve **db.subtract** fonksiyonlarında olan ufak hatalar düzeltildi.
-- Genel hata düzeltmesi yapıldı.
+- Artık bütün komutlardaki anahtarın sonunda nokta (`.`) varsa, bu alt bir öğe eklemek istendiğini belirtiyor.
+- Ufak hatalar düzeltildi.
 
 
 ## ✨ Kurulum
@@ -28,10 +27,22 @@ const db = new PixeliaDB({ databasePath: './database.json' });
 db.set('kullanıcı', { isim: 'Alfred', email: 'alfred@pixelia.to' });
 ```
 
+```js
+db.set('kullanıcı_alfred.email', "alfred@pixelia.to");
+```
+*🖨️ Çıktı*
+```json
+{
+  "kullanıcı_alfred": {
+    "email": "alfred@pixelia.to"
+  }
+}
+```
+
 - **db.get():** fonksiyonu, belirtilen anahtarı kullanarak veritabanındaki bir değeri almak için kullanılır. Eğer belirtilen anahtar mevcut değilse, _undefined_ döner.
 ```js
 const kullaniciVeri = db.get('kullanıcı');
-console.log(kullaniciVeri); // { isim: 'Alfred', email: 'alfred@pixelia.to' }
+console.log(kullaniciVeri);
 ```
 
 - **db.delete():** fonksiyonu, belirtilen anahtarı kullanarak veritabanından bir değeri silmek için kullanılır.
@@ -48,18 +59,18 @@ console.log(butunVeriler);
 - **db.fetch():** fonksiyonu, belirtilen anahtardaki değeri döndürür. Eğer anahtar mevcut değilse, _null_ döner.
 ```js
 const kullaniciVeri = db.fetch('kullanıcı');
-console.log(kullaniciVeri); // { isim: 'Alfred', email: 'alfred@pixelia.to' }
+console.log(kullaniciVeri);
 ```
 
 - **db.has():** fonksiyonu, belirtilen anahtarın veritabanında mevcut olup olmadığını kontrol eder.
 ```js
 const kullaniciVarmi = db.has('kullanıcı');
-console.log(kullaniciVarmi); // true
+console.log(kullaniciVarmi);
 ```
 
 - **db.clear():** fonksiyonu, veritabanındaki tüm verileri temizler.
 ```js
-db.clear(); // Veritabanındaki tüm verileri temizle
+db.clear();
 ```
 
 - **db.push():** fonksiyonu, belirtilen anahtarın altındaki bir diziye yeni bir öğe ekler.
@@ -69,6 +80,23 @@ db.push('yeniDizi', "Merhaba Pixelia!");
 
 ```js
 db.push('yeniDizi2', { array: "Merhaba Pixelia!" });
+```
+
+```js
+db.push("kullanıcı_alfred.envanter", { isim: "elma", miktar: 10 });
+```
+*🖨️ Çıktı*
+```json
+{
+  "kullanıcı_alfred": {
+    "envanter": [
+      {
+        "isim": "elma",
+        "miktar": 10
+      }
+    ]
+  }
+}
 ```
 
 - **db.add():** fonksiyonu, belirtilen anahtardaki değeri artırmak için kullanılır. Eğer belirtilen anahtar mevcut değilse, yeni bir anahtar oluşturulur ve değeri eklenir.

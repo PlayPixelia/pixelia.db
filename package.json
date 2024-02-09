@@ -1,6 +1,6 @@
 {
   "name": "pixelia.db",
-  "version": "1.5.0",
+  "version": "1.5.2",
   "description": "Pixelia için oluşturulmuş bir Node.js projelerinde kullanılabilecek bir veri tabanı modülüdür.",
   "main": "index.js",
   "scripts": {
