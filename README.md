@@ -49,6 +49,9 @@ console.log(kullaniciVeri);
 ```js
 db.delete('kullanıcı');
 ```
+```js
+db.delete('kullanıcı_alfred.email');
+```
 
 - **db.all():** fonksiyonu, tüm veritabanı içeriğini bir nesne olarak döndürür.
 ```js
